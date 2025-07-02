@@ -1,9 +1,11 @@
 app_name = "advanced_pricing_rules"
 app_title = "Advanced Pricing Rules"
 app_publisher = "Evgheni Nemerenco"
-app_description = "Allows to use new types of price rules for more flexible pricing logic especially for wholesales"
+app_description = "Allows to use new types of pricing rules for more flexible pricing logic especially for wholesales"
 app_email = "evgheni.nemerenco@gmail.com"
 app_license = "mit"
+
+fixtures = ["Custom Field", "Property Setter"]
 
 # Apps
 # ------------------
@@ -174,9 +176,12 @@ app_license = "mit"
 # Overriding Methods
 # ------------------------------
 #
-# override_whitelisted_methods = {
+#override_whitelisted_methods = {
 # 	"frappe.desk.doctype.event.event.get_events": "advanced_pricing_rules.event.get_events"
-# }
+#    "erpnext.accounts.doctype.pricing_rule.pricing_rule.apply_pricing_rule": "advanced_pricing_rules.custom_pricing_rule.apply_pricing_rule_patch",
+#    "erpnext.stock.get_item_details.apply_price_list": "advanced_pricing_rules.custom_pricing_rule.apply_price_list_patch",
+#    "erpnext.accounts.doctype.pricing_rule.pricing_rule.get_pricing_rule_for_item": "advanced_pricing_rules.custom_pricing_rule.get_pricing_rule_for_item_patch",
+#}
 #
 # each overriding function accepts a `data` argument;
 # generated from the base implementation of the doctype dashboard,
@@ -241,4 +246,3 @@ app_license = "mit"
 # default_log_clearing_doctypes = {
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
-
