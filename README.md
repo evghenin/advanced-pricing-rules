@@ -28,7 +28,7 @@ This example demonstrates how to configure a dynamic pricing rule that fetches t
 
 1. **Create Price List: `Standard Selling`**
    - Go to **Selling > Price List**
-   - Click **New**
+   - Click **Add Price List**
    - Set:
      - **Price List Name**: `Standard Selling`
      - **Selling**: ✔️
@@ -41,7 +41,7 @@ This example demonstrates how to configure a dynamic pricing rule that fetches t
 
 3. **Create an Item**
    - Go to **Stock > Item**
-   - Click **New**
+   - Click **Add Item**
    - Set:
      - **Item Code**: `ITEM-001`
      - **Item Name**: `Example Product`
@@ -55,7 +55,7 @@ This example demonstrates how to configure a dynamic pricing rule that fetches t
 
 5. **Create a Pricing Rule**
    - Go to **Selling > Pricing Rule**
-   - Click **New**
+   - Click **Add Pricing Rule**
    - Set:
      - **Apply On**: `Item Code`
      - **Item Code**: `ITEM-001`
