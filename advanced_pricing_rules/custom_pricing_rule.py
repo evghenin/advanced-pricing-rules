@@ -23,12 +23,14 @@ def get_pricing_rule_for_item_patch(args, doc=None, for_validate=False, **kwargs
 @frappe.whitelist()
 def apply_price_discount_rule_patch(pricing_rule, item_details, args=None):
     if 'advanced_pricing_rules' in frappe.get_installed_apps():
-        if pricing_rule.rate_or_discount == "Rate from Price List" and pricing_rule.get("custom_rate_from_price_list"):
-            pricing_rule_rate = 0.0
+        cpr = copy.copy(pricing_rule);
+        if cpr.get("rate_or_discount") == "Rate from Price List" and cpr.get("custom_rate_from_price_list"):
+            frappe.msgprint(repr(cpr.rate_or_discount))
+            frappe.msgprint(repr(cpr.rate))
             
-            pctx = frappe._dict(
+            ctx = frappe._dict(
                 {
-                    "price_list": pricing_rule.get("custom_rate_from_price_list"),
+                    "price_list": cpr.get("custom_rate_from_price_list"),
                     "uom": args.get("uom"),
                     "transaction_date": args.get("transaction_date"), 
                     "customer": args.get("customer"),
@@ -36,11 +38,12 @@ def apply_price_discount_rule_patch(pricing_rule, item_details, args=None):
                     "qty": args.get("qty"),
                 }
             )
-            
-            item_price = get_price_list_rate_for(pctx, args.item_code)
                 
-            pricing_rule.rate_or_discount = "Rate"
-            pricing_rule.rate = item_price
+            cpr.rate_or_discount = "Rate"
+            cpr.rate = get_price_list_rate_for(ctx, args.get("item_code"))
             
-    return apply_price_discount_rule(pricing_rule, item_details, args)
-        
+            frappe.msgprint(repr(cpr.rate_or_discount))
+            frappe.msgprint(repr(cpr.rate))
+
+            
+    return apply_price_discount_rule(cpr, item_details, args)
