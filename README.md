@@ -1,6 +1,6 @@
 # Advanced Pricing Rules
 
-This is a custom app for **ERNext**, enhancing the standard pricing and discount mechanisms in sales-related documents.
+This is a custom app for **ERPNext**, enhancing the standard pricing and discount mechanisms in sales-related documents.
 
 ## Features
 
