@@ -15,7 +15,7 @@ def apply_pricing_rule_patch(args, doc=None):
         if getattr(args, "custom_ignore_pricing_rule", False):
             args.ignore_pricing_rule = 1
 
-    return apply_pricing_rule(args, doc)
+    return apply_pricing_rule(args, doc=doc)
 
 
 @frappe.whitelist()
@@ -34,7 +34,7 @@ def get_pricing_rule_for_item_patch(args, doc=None, for_validate=False, **kwargs
         if getattr(item_doc, "custom_ignore_pricing_rule", False):
             args_copy.ignore_pricing_rule = 1
 
-    return get_pricing_rule_for_item(args_copy, doc, for_validate, **kwargs)
+    return get_pricing_rule_for_item(args_copy, doc=doc, for_validate=for_validate, **kwargs)
 
 
 @frappe.whitelist()
@@ -53,7 +53,7 @@ def apply_price_list_on_item_patch(args, doc=None):
         if getattr(item_doc, "custom_ignore_pricing_rule", False):
             args_copy.ignore_pricing_rule = 1
 
-    return apply_price_list_on_item(args_copy, doc)
+    return apply_price_list_on_item(args_copy, doc=doc)
 
 
 @frappe.whitelist()
@@ -73,7 +73,12 @@ def get_item_details_patch(args, doc=None, for_validate=False, overwrite_warehou
             if getattr(item_doc, "custom_ignore_pricing_rule", False):
                 args_copy.ignore_pricing_rule = 1
 
-    return get_item_details(args_copy, doc, for_validate, overwrite_warehouse)
+    item_details = get_item_details(args_copy, doc=doc, for_validate=for_validate, overwrite_warehouse=overwrite_warehouse)
+    
+    if getattr(item_doc, "custom_ignore_pricing_rule", False):
+        item_details.rate = item_doc.rate
+        
+    return item_details
 
 
 @frappe.whitelist()
