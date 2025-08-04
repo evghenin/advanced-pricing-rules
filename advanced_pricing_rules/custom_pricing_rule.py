@@ -59,6 +59,7 @@ def apply_price_list_on_item_patch(args, doc=None):
 @frappe.whitelist()
 def get_item_details_patch(args, doc=None, for_validate=False, overwrite_warehouse=True):
     args_copy = process_args(args)
+    item_doc = None
 
     if 'advanced_pricing_rules' in frappe.get_installed_apps():
         if isinstance(doc, str):
@@ -75,7 +76,7 @@ def get_item_details_patch(args, doc=None, for_validate=False, overwrite_warehou
 
     item_details = get_item_details(args_copy, doc=doc, for_validate=for_validate, overwrite_warehouse=overwrite_warehouse)
     
-    if getattr(item_doc, "custom_ignore_pricing_rule", False):
+    if item_doc and getattr(item_doc, "custom_ignore_pricing_rule", False):
         item_details.rate = item_doc.rate
         
     return item_details
