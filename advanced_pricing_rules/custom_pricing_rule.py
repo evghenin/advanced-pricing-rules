@@ -1,86 +1,9 @@
 import copy
 import json
 import frappe
-from frappe.utils import flt
-from erpnext.accounts.doctype.pricing_rule.pricing_rule import apply_pricing_rule, get_pricing_rule_for_item, \
-    apply_price_discount_rule
+from erpnext.accounts.doctype.pricing_rule.pricing_rule import apply_price_discount_rule
 from erpnext.accounts.doctype.pricing_rule.utils import get_pricing_rules
-from erpnext.stock.get_item_details import get_price_list_rate_for, get_item_price, apply_price_list_on_item, \
-    get_item_details, process_args
-
-
-@frappe.whitelist()
-def apply_pricing_rule_patch(args, doc=None):
-    if 'advanced_pricing_rules' in frappe.get_installed_apps():
-        if getattr(args, "custom_ignore_pricing_rule", False):
-            args.ignore_pricing_rule = 1
-
-    return apply_pricing_rule(args, doc=doc)
-
-
-@frappe.whitelist()
-def get_pricing_rule_for_item_patch(args, doc=None, for_validate=False, **kwargs):
-    args_copy = copy.deepcopy(args)
-
-    if 'advanced_pricing_rules' in frappe.get_installed_apps():
-        if isinstance(doc, str):
-            doc = json.loads(doc)
-
-        if doc:
-            doc = frappe.get_doc(doc)
-
-        item_doc = next((item for item in doc.items if item.name == args_copy.child_docname), None)
-
-        if getattr(item_doc, "custom_ignore_pricing_rule", False):
-            args_copy.ignore_pricing_rule = 1
-
-    return get_pricing_rule_for_item(args_copy, doc=doc, for_validate=for_validate, **kwargs)
-
-
-@frappe.whitelist()
-def apply_price_list_on_item_patch(args, doc=None):
-    args_copy = copy.deepcopy(args)
-
-    if 'advanced_pricing_rules' in frappe.get_installed_apps():
-        if isinstance(doc, str):
-            doc = json.loads(doc)
-
-        if doc:
-            doc = frappe.get_doc(doc)
-
-        item_doc = next((item for item in doc.items if item.name == args_copy.child_docname), None)
-
-        if getattr(item_doc, "custom_ignore_pricing_rule", False):
-            args_copy.ignore_pricing_rule = 1
-
-    return apply_price_list_on_item(args_copy, doc=doc)
-
-
-@frappe.whitelist()
-def get_item_details_patch(args, doc=None, for_validate=False, overwrite_warehouse=True):
-    args_copy = process_args(args)
-    item_doc = None
-
-    if 'advanced_pricing_rules' in frappe.get_installed_apps():
-        if isinstance(doc, str):
-            doc = json.loads(doc)
-
-        if doc:
-            doc = frappe.get_doc(doc)
-
-        if getattr(args_copy, "child_docname", False):
-            item_doc = next((item for item in doc.items if item.name == args_copy.child_docname), None)
-
-            if getattr(item_doc, "custom_ignore_pricing_rule", False):
-                args_copy.ignore_pricing_rule = 1
-
-    item_details = get_item_details(args_copy, doc=doc, for_validate=for_validate, overwrite_warehouse=overwrite_warehouse)
-    
-    if item_doc and getattr(item_doc, "custom_ignore_pricing_rule", False):
-        item_details.rate = item_doc.rate
-        
-    return item_details
-
+from erpnext.stock.get_item_details import get_price_list_rate_for
 
 @frappe.whitelist()
 def apply_price_discount_rule_patch(pricing_rule, item_details, args=None):
