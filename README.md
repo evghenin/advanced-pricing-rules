@@ -6,15 +6,7 @@ This is a custom app for **ERPNext**, enhancing the standard pricing and discoun
 
 This app provides the following enhancements:
 
-1. **"Ignore Pricing Rules" checkbox**  
-   Added at the Item level in the following documents:
-   - Quotation
-   - Sales Order
-   - Sales Invoice
-   - Delivery Note  
-   When checked, pricing rules will be bypassed for that specific item.
-
-2. **New pricing option: "Rate from Price List"**  
+1. **New pricing option: "Rate from Price List"**  
    Introduced in the `Rate or Discount` field of **Pricing Rule**.  
    When selected, a new field `Rate from Price List` appears, allowing the user to choose a specific **Price List** from which the item price should be fetched directly.
 
