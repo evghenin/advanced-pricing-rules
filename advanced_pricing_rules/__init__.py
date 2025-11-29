@@ -4,10 +4,6 @@ import frappe
 import erpnext.accounts.doctype.pricing_rule.pricing_rule as pricing_rule_module
 import erpnext.accounts.doctype.pricing_rule.utils as pricing_rule_utils
 import erpnext.stock.get_item_details as get_item_details
-from advanced_pricing_rules.custom_pricing_rule import apply_pricing_rule_patch, get_pricing_rule_for_item_patch, apply_price_discount_rule_patch, apply_price_list_on_item_patch, get_item_details_patch
+from advanced_pricing_rules.custom_pricing_rule import apply_price_discount_rule_patch
 
-pricing_rule_module.apply_pricing_rule = apply_pricing_rule_patch
-pricing_rule_module.get_pricing_rule_for_item = get_pricing_rule_for_item_patch
 pricing_rule_module.apply_price_discount_rule = apply_price_discount_rule_patch
-get_item_details.apply_price_list_on_item = apply_price_list_on_item_patch
-get_item_details.get_item_details = get_item_details_patch
